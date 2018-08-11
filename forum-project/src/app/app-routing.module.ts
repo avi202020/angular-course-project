@@ -10,6 +10,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes)
   ],
-  declarations: [ RouterModule ]
+  exports: [ RouterModule ]
 })
 export class AppRoutingModule { }
