@@ -2,6 +2,7 @@ const express = require('express')
 const authCheck = require('../config/auth-check')
 const Post = require('../models/Post')
 const Category = require('../models/Category')
+const Comment = require('../models/Comment')
 
 const router = new express.Router()
 
@@ -155,6 +156,11 @@ router.delete('/delete/:id', authCheck, async (req, res) => {
   const postId = req.params.id
   let post = await Post.findById(postId)
   if (req.user._id.toString() === post.author.toString() || req.user.roles.indexOf('Admin') > -1) {
+    let postComments = post.comments
+    for (let id of postComments) {
+      await Comment.findById(id)
+        .remove()
+    }
     Post
       .findById(postId)
       .then((post) => {

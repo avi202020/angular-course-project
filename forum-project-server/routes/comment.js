@@ -1,10 +1,11 @@
 const express = require('express')
 const authCheck = require('../config/auth-check.js')
 const Comment = require('../models/Comment')
+const Post = require('../models/Post')
 
 const router = new express.Router()
 
-function validateCommentCreateForm (payload) {
+async function validateCommentCreateForm (payload) {
   const errors = {}
   let isFormValid = true
   let message = ''
@@ -25,11 +26,11 @@ function validateCommentCreateForm (payload) {
   }
 }
 
-router.post('/create', authCheck, (req, res) => {
+router.post('/create', authCheck, async (req, res) => {
   const commentObj = req.body
-  const validationResult = validateCommentCreateForm(commentObj)
+  const validationResult = await validateCommentCreateForm(commentObj)
   if (!validationResult.success) {
-    return res.json(200).json({
+    return res.status(200).json({
       success: false,
       message: validationResult.message,
       errors: validationResult.errors
@@ -40,11 +41,30 @@ router.post('/create', authCheck, (req, res) => {
   Comment
     .create(commentObj)
     .then((createdComment) => {
-      res.status(200).json({
-        success: true,
-        message: 'Comment created successfully',
-        data: createdComment
-      })
+      Post
+        .findById(createdComment.postId)
+        .then(post => {
+          let postComments = post.comments
+          postComments.push(createdComment._id)
+          post.comments = postComments
+          post
+            .save()
+            .then(() => {
+              res.status(200).json({
+                success: true,
+                message: 'Comment created successfully',
+                data: createdComment
+              })
+            })
+            .catch((err) => {
+              console.log(err)
+              const message = 'Something went wrong :('
+              return res.status(200).json({
+                success: false,
+                message: message
+              })
+            })
+        })
     })
     .catch((err) => {
       console.log(err)
@@ -117,8 +137,12 @@ router.delete('/delete/:id', authCheck, async (req, res) => {
         message: message
       })
     })
-
   if (req.user._id.toString() === comment.creator.toString() || req.user.roles.includes('Admin') > -1) {
+    let post = await Post.findById(comment.postId)
+    console.log(post.comments)
+    let postComments = post.comments.filter(c => c.toString() !== commentId)
+    post.comments = postComments
+    await post.save()
     comment
       .remove()
       .then(() => {
