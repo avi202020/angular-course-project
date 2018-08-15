@@ -1,16 +1,22 @@
+import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './components/auth/auth.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { GuardsModule } from './core/guards/guards.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ServicesModule } from './core/services/services.module';
+import { SharedModule } from './shared/shared.module';
 import { StoreModule } from '@ngrx/store';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 
-import { AppRoutingModule } from './app-routing.module';
-import { SharedModule } from './shared/shared.module';
-import { AuthModule } from './components/auth/auth.module';
-import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { appReducers} from './core/store/app.reducers';
 import { ErrorInterceptor } from './core/interceptors';
+
+import {CdkTableModule} from '@angular/cdk/table';
+import {CdkTreeModule} from '@angular/cdk/tree';
 
 @NgModule({
   declarations: [
@@ -19,10 +25,13 @@ import { ErrorInterceptor } from './core/interceptors';
   imports: [
     AppRoutingModule,
     AuthModule,
+    BrowserAnimationsModule,
     BrowserModule,
+    GuardsModule,
     HttpClientModule,
-    ReactiveFormsModule,
+    ServicesModule,
     SharedModule,
+    StoreModule.forRoot(appReducers),
     ToastrModule.forRoot()
   ],
   providers: [
@@ -33,7 +42,8 @@ import { ErrorInterceptor } from './core/interceptors';
     }
   ],
   exports: [
-    ReactiveFormsModule,
+    CdkTableModule,
+    CdkTreeModule
   ],
   bootstrap: [AppComponent]
 })

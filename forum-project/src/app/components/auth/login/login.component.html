@@ -1,3 +1,24 @@
-<p>
-  login works!
-</p>
+<h1 mat-dialog-title>Login</h1>
+<div mat-dialog-content>
+  <form [formGroup]="loginForm" (click)="kur()">
+    <mat-form-field>
+      <input matInput type="email" email formControlName="email" />
+      <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">
+        Email is required.
+      </mat-error>
+      <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">
+        Invalid email.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" formControlName="password" />
+      <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.required">
+        Password is required.
+      </mat-error>
+    </mat-form-field>
+      <div mat-dialog-actions>
+        <button [disabled]="!loginForm.valid" mat-raised-button>Login</button>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+      </div>
+  </form>
+</div>
