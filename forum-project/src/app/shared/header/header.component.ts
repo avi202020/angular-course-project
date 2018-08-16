@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../../components/auth/login/login.component';
+import { RegisterComponent } from '../../components/auth/register/register.component';
 
 @Component({
   selector: 'app-header',
@@ -14,10 +15,21 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDialog (): void {
+  openLoginDialog (): void {
     const dialogRef = this.dialog.open(LoginComponent, {
-      width: '500px',
-      height: '500px'
+      width: '600px',
+      height: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+
+  openRegisterDialog (): void {
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '600px',
+      height: '400px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

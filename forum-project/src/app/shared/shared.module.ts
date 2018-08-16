@@ -9,7 +9,33 @@ import { MatToolbarModule, MatButtonModule, MatFormFieldModule, MatDialogModule,
   MatInputModule,
   MatSelectModule,
   MatProgressBarModule,
-  MatSnackBarModule } from '@angular/material';
+  MatSnackBarModule,
+  MatStepperModule,
+  MatAutocompleteModule,
+  MatBadgeModule,
+  MatBottomSheetModule,
+  MatButtonToggleModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDividerModule,
+  MatGridListModule,
+  MatIconModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSortModule,
+  MatTableModule,
+  MatTabsModule,
+  MatTooltipModule,
+  MatTreeModule, } from '@angular/material';
+import { CompareValidatorDirective } from './validators/compare-validator.directive';
 
 const MAT_MODULES = [
   MatButtonModule,
@@ -22,7 +48,32 @@ const MAT_MODULES = [
   MatSelectModule,
   MatSnackBarModule,
   MatFormFieldModule,
-  MatDialogModule
+  MatDialogModule,
+  MatStepperModule,
+  MatAutocompleteModule,
+  MatBadgeModule,
+  MatBottomSheetModule,
+  MatButtonToggleModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDividerModule,
+  MatGridListModule,
+  MatIconModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSortModule,
+  MatTableModule,
+  MatTabsModule,
+  MatTooltipModule,
+  MatTreeModule,
   ];
 
 @NgModule({
@@ -33,10 +84,12 @@ const MAT_MODULES = [
   ],
   declarations: [
     ...sharedComponents,
+    CompareValidatorDirective
   ],
   exports: [
     ...sharedComponents,
-    ...MAT_MODULES
+    ...MAT_MODULES,
+    CompareValidatorDirective
   ]
 })
 export class SharedModule {

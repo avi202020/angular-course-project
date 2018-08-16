@@ -13,8 +13,8 @@ export class LoginComponent {
   protected loginForm;
   constructor(protected fb: FormBuilder, public dialogRef: MatDialogRef<LoginComponent>) {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required, Validators.email],
-      password: ['', Validators.required, Validators.minLength(6)]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
    }
 
@@ -25,7 +25,7 @@ export class LoginComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  kur(): void {
+  login(): void {
     console.log('asdf');
   }
 }
