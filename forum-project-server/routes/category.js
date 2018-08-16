@@ -30,7 +30,7 @@ router.post('/create', authCheck, (req, res) => {
   if (req.user.roles.indexOf('Admin') > -1) {
     const validationResult = validateCategoryForm(categoryObj)
     if (!validationResult.success) {
-      return res.status(200).json({
+      return res.status(400).json({
         success: false,
         message: validationResult.message,
         errors: validationResult.errors
@@ -54,13 +54,13 @@ router.post('/create', authCheck, (req, res) => {
         if (err.code === 11000) {
           message = 'Category with the given name already exists.'
         }
-        return res.status(200).json({
+        return res.status(401).json({
           success: false,
           message: message
         })
       })
   } else {
-    return res.status(200).json({
+    return res.status(401).json({
       success: false,
       message: 'Invalid credentials!'
     })
@@ -73,7 +73,7 @@ router.post('/edit/:id', authCheck, (req, res) => {
     const categoryObj = req.body
     const validationResult = validateCategoryForm(categoryObj)
     if (!validationResult.success) {
-      return res.status(200).json({
+      return res.status(400).json({
         success: false,
         message: validationResult.message,
         errors: validationResult.errors
@@ -100,7 +100,7 @@ router.post('/edit/:id', authCheck, (req, res) => {
             if (err.code === 11000) {
               message = 'Category with the given name already exists.'
             }
-            return res.status(200).json({
+            return res.status(401).json({
               success: false,
               message: message
             })
@@ -109,13 +109,13 @@ router.post('/edit/:id', authCheck, (req, res) => {
       .catch((err) => {
         console.log(err)
         const message = 'Something went wrong :( Check the form for errors.'
-        return res.status(200).json({
+        return res.status(401).json({
           success: false,
           message: message
         })
       })
   } else {
-    return res.status(200).json({
+    return res.status(401).json({
       success: false,
       message: 'Invalid credentials!'
     })
@@ -146,13 +146,13 @@ router.delete('/delete/:id', authCheck, (req, res) => {
           })
       })
       .catch(() => {
-        return res.status(200).json({
+        return res.status(401).json({
           success: false,
           message: 'Entry does not exist!'
         })
       })
   } else {
-    return res.status(200).json({
+    return res.status(401).json({
       success: false,
       message: 'Invalid credentials!'
     })
