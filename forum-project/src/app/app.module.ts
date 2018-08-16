@@ -20,11 +20,13 @@ import {CdkTreeModule} from '@angular/cdk/tree';
 import { HomeComponent } from './components/home/home.component';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    AboutComponent,
   ],
   imports: [
     AppRoutingModule,
