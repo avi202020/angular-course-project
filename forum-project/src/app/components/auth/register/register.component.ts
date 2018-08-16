@@ -4,16 +4,19 @@ import { RegisterModel } from '../../../core/models/auth/register.model';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { MatDialogRef } from '@angular/material';
 import { compareValidator } from '../../../shared/validators/compare-validator.directive';
+import { BaseComponent } from '../../base.component';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent extends BaseComponent {
   protected registerForm;
 
   constructor(protected fb: FormBuilder, public dialogRef: MatDialogRef<RegisterComponent>) {
+    super();
+
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, Validators.email]],

@@ -6,9 +6,6 @@ import { Subscription } from 'rxjs';
 export abstract class BaseComponent implements OnDestroy {
   protected subscriptions: Subscription[] = [];
 
-  protected constructor(protected store$: Store<AppState>) {
-  }
-
   public ngOnDestroy() {
     this.subscriptions.forEach(el => el.unsubscribe());
   }
