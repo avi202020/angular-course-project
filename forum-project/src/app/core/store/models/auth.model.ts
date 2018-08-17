@@ -3,6 +3,7 @@ export class AuthModel {
     public token: string,
     public username: string,
     public email: string,
-    public isLoggedIn: boolean
+    public isLoggedIn: boolean,
+    public isAdmin: boolean
   ) { }
 }

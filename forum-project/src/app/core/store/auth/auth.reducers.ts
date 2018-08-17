@@ -3,16 +3,17 @@ import { AuthModel } from '../models/auth.model';
 import * as AuthActions from './auth.actions';
 
 const initialState: AuthState = {
-  auth: new AuthModel('', '', '', false)
+  auth: new AuthModel('', '', '', false, false)
 };
 
-export function authReducer(
+export function authReducer (
   state: AuthState = initialState,
-  action: AuthActions.Types
-) {
+  action: any) {
   switch (action.type) {
     case AuthActions.AUTH:
-      return action.payload;
+      return Object.assign({}, state, {auth: action.payload});
+    case AuthActions.LOGOUT:
+      return initialState;
     default:
       return state;
   }

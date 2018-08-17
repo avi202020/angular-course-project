@@ -14,13 +14,13 @@ import { BaseComponent } from '../../base.component';
 export class RegisterComponent extends BaseComponent {
   protected registerForm;
 
-  constructor(protected fb: FormBuilder, public dialogRef: MatDialogRef<RegisterComponent>) {
+  constructor(protected fb: FormBuilder, public dialogRef: MatDialogRef<RegisterComponent>, private authService: AuthService) {
     super();
 
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required, compareValidator('password')]]
     });
   }
@@ -35,7 +35,11 @@ export class RegisterComponent extends BaseComponent {
   }
 
   register(): void {
-    console.log('asdf');
+    const form = this.registerForm.value;
+    const registerModel = new RegisterModel(form.email, form.username, form.password);
+
+    this.authService.register(registerModel)
+      .subscribe(() => this.onNoClick());
   }
 
 }

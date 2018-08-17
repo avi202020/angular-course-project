@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../../components/auth/login/login.component';
 import { RegisterComponent } from '../../components/auth/register/register.component';
+import { AuthService } from '../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import { RegisterComponent } from '../../components/auth/register/register.compo
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public authService: AuthService) { }
 
   ngOnInit() {
   }

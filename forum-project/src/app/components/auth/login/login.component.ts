@@ -13,12 +13,12 @@ import { BaseComponent } from '../../base.component';
 export class LoginComponent extends BaseComponent {
   protected loginForm;
 
-  constructor(protected fb: FormBuilder, public dialogRef: MatDialogRef<LoginComponent>) {
+  constructor(protected fb: FormBuilder, public dialogRef: MatDialogRef<LoginComponent>, private authService: AuthService) {
     super();
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
    }
 
@@ -30,6 +30,8 @@ export class LoginComponent extends BaseComponent {
     this.dialogRef.close();
   }
   login(): void {
-    console.log('asdf');
+    const form = this.loginForm.value;
+    this.authService.login(new LoginModel(form.email, form.password))
+      .subscribe(() => this.onNoClick());
   }
 }
