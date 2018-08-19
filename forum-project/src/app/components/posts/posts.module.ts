@@ -16,4 +16,4 @@ import { postsComponents } from '.';
     ...postsComponents
   ]
 })
-export class PostsModule() { }
+export class PostsModule { }
