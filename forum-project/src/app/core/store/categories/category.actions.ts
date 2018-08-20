@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { CategoryModel } from '../models/category.model';
-import { CategoryEditModel } from '../models/categoryEdit.model';
+import { CategoryModel } from '../../models/category/category.model';
+import { CategoryEditModel } from '../../models/category/categoryEdit.model';
 
 export const ADD_CATEGORY = '[CATEGORY] ADD_CATEGORY';
 export const EDIT_CATEGORY = '[CATEGORY] EDIT_CATEGORY';

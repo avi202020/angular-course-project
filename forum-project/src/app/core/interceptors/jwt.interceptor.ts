@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../store/app.state';
 import * as jwt_decode from 'jwt-decode';
-import { AuthModel } from '../store/models/auth.model';
+import { AuthModel } from '../models/auth/auth.model';
 import { Auth } from '../store/auth/auth.actions';
 import { CookieService } from 'ngx-cookie-service';
 

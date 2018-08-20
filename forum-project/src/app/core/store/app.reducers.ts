@@ -1,7 +1,9 @@
 import { authReducer } from './auth/auth.reducers';
-import { categoryReducer } from './categories/categories.reducers';
+import { categoryReducer } from './categories/category.reducers';
+import { postReducer } from './posts/post.reducers';
 
 export const appReducers = {
   auth: authReducer,
-  categories: categoryReducer
+  categories: categoryReducer,
+  posts: postReducer
 };

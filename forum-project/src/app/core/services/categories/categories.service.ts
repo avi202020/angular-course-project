@@ -4,9 +4,9 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AppState } from '../../store/app.state';
 import { Store, select } from '@ngrx/store';
-import { CategoryEditModel } from '../../store/models/categoryEdit.model';
-import { GetAllCategories, Add, Edit, Delete } from '../../store/categories/categories.actions';
-import { CategoryModel } from '../../store/models/category.model';
+import { CategoryEditModel } from '../../models/category/categoryEdit.model';
+import { GetAllCategories, Add, Edit, Delete } from '../../store/categories/category.actions';
+import { CategoryModel } from '../../models/category/category.model';
 import { ResponseModel } from '../../models/response.model';
 
 const allCategoriesUrl = 'http://localhost:5000/category/all';

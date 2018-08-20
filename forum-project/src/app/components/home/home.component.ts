@@ -4,7 +4,7 @@ import { CategoriesService } from '../../core/services/categories/categories.ser
 import { AppState } from '../../core/store/app.state';
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { CategoryEditModel } from '../../core/store/models/categoryEdit.model';
+import { CategoryEditModel } from '../../core/models/category/categoryEdit.model';
 
 @Component({
   selector: 'app-home',

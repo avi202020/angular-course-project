@@ -1,6 +1,6 @@
-import { CategoryState } from './categories.state';
-import { CategoryModel } from '../models/category.model';
-import { CategoryEditModel } from '../models/categoryEdit.model';
+import { CategoryState } from './category.state';
+import { CategoryModel } from '../../models/category/category.model';
+import { CategoryEditModel } from '../../models/category/categoryEdit.model';
 import * as CategoriesActions from './category.actions';
 
 const initialState: CategoryState = {

@@ -1,4 +1,4 @@
-import { CategoryEditModel } from '../models/categoryEdit.model';
+import { CategoryEditModel } from '../../models/category/categoryEdit.model';
 
 export interface CategoryState {
   readonly all: CategoryEditModel[];

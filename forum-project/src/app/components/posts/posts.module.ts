@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { postsComponents } from '.';
+import { PostsRoutingModule } from './posts.routing';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { postsComponents } from '.';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PostsRoutingModule
   ],
   exports: [
     ...postsComponents
