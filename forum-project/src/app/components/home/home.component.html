@@ -1,7 +1,7 @@
 <!--Carousel Wrapper-->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-8 margin">
+<div class="container mt-5">
+    <div class="homepage row">
+        <div class="col-md-8">
             <!--Carousel Wrapper-->
         <mdb-carousel [isControls]="true" class="carousel slide carousel-fade" [animation]="'fade'">
             <!--First slide-->
@@ -29,24 +29,7 @@
         </mdb-carousel>
         <!--/.Carousel Wrapper-->
         </div>
-        <div class="card card-body col-md-4 margin">
-                <h4 class="card-header text-center">Categories</h4>
-                <div class="row car-body text-center">
-                    <div class="col-lg-6">
-                        <ul class="list-group">
-                            <li class="list-group-item btn-custom" *ngFor="let c of leftCatSet">
-                                <a routerLink="/posts">{{c.name}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-6">
-                        <ul class="list-group">
-                            <li class="list-group-item btn-custom" *ngFor="let c of rightCatSet">
-                                <a routerLink="/posts" [queryParams]="{c: c._id}">{{c.name}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-        </div>
+        <app-category-list [leftCatSet]="leftCatSet" [rightCatSet]="rightCatSet"></app-category-list>
     </div>
+    <app-posts-list [posts]="posts"></app-posts-list>
 </div>

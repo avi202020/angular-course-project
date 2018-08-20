@@ -27,6 +27,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../environments/environment';
 import { storeLogger } from 'ngrx-store-logger';
 import { AppState } from './core/store/app.state';
+import { CategoryModule } from './components/category/category.module';
 
 export function logger(reducer: ActionReducer<AppState>): any {
   return storeLogger()(reducer);
@@ -45,6 +46,7 @@ export const metaReducers = environment.production ? [] : [logger];
     AuthModule,
     BrowserAnimationsModule,
     BrowserModule,
+    CategoryModule,
     GuardsModule,
     HttpClientModule,
     PostsModule,
@@ -69,7 +71,7 @@ export const metaReducers = environment.production ? [] : [logger];
   ],
   exports: [
     CdkTableModule,
-    CdkTreeModule
+    CdkTreeModule,
   ],
   bootstrap: [AppComponent]
 })

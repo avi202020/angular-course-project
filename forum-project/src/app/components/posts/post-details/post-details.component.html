@@ -1,3 +1,7 @@
-<p>
-  post-details works!
-</p>
+<div *ngIf="post; else notFound">
+    <p>{{post.title}}</p>
+    <p>{{post.body}}</p>
+</div>
+<ng-template #notFound>
+  <span>Post not found.</span>
+</ng-template>
