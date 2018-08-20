@@ -1,29 +1,52 @@
 <!--Carousel Wrapper-->
-<div class="col-md-8 margin">
-    <!--Carousel Wrapper-->
-<mdb-carousel [isControls]="true" class="carousel slide carousel-fade" [animation]="'fade'">
-    <!--First slide-->
-    <mdb-carousel-item>
-        <div class="view w-100">
-            <img class="d-block w-100" src="http://www.usingtheirwords.org/wp-content/uploads/2017/09/community-hero.png" alt="First slide">
-            <div class="mask rgba-black-light waves-light" mdbWavesEffect></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 margin">
+            <!--Carousel Wrapper-->
+        <mdb-carousel [isControls]="true" class="carousel slide carousel-fade" [animation]="'fade'">
+            <!--First slide-->
+            <mdb-carousel-item>
+                <div class="view w-100">
+                    <img class="d-block w-100" src="http://www.usingtheirwords.org/wp-content/uploads/2017/09/community-hero.png" alt="First slide">
+                    <div class="mask rgba-black-light waves-light" mdbWavesEffect></div>
+                </div>
+                <div class="carousel-caption">
+                    <h3 class="h3-responsive">Welcome to Forum</h3>
+                </div>
+            </mdb-carousel-item>
+            <!--/First slide-->
+            <!--Third slide-->
+            <mdb-carousel-item>
+                <div class="view w-100">
+                    <img class="d-block w-100" src="http://www.silencetodo.com/wp-content/uploads/2018/03/1_community_banner-1.png" alt="Third slide">
+                    <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div>
+                </div>
+                <div class="carousel-caption">
+                    <h3 class="h3-responsive">Welcome to Forum</h3>
+                </div>
+            </mdb-carousel-item>
+            <!--/Third slide-->
+        </mdb-carousel>
+        <!--/.Carousel Wrapper-->
         </div>
-        <div class="carousel-caption">
-            <h3 class="h3-responsive">Welcome to Forum</h3>
+        <div class="card card-body col-md-4 margin">
+                <h4 class="card-header text-center">Categories</h4>
+                <div class="row car-body text-center">
+                    <div class="col-lg-6">
+                        <ul class="list-group">
+                            <li class="list-group-item btn-custom" *ngFor="let c of leftCatSet">
+                                <a routerLink="/posts">{{c.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="list-group">
+                            <li class="list-group-item btn-custom" *ngFor="let c of rightCatSet">
+                                <a routerLink="/posts" [queryParams]="{c: c._id}">{{c.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
         </div>
-    </mdb-carousel-item>
-    <!--/First slide-->
-    <!--Third slide-->
-    <mdb-carousel-item>
-        <div class="view w-100">
-            <img class="d-block w-100" src="http://www.silencetodo.com/wp-content/uploads/2018/03/1_community_banner-1.png" alt="Third slide">
-            <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div>
-        </div>
-        <div class="carousel-caption">
-            <h3 class="h3-responsive">Welcome to Forum</h3>
-        </div>
-    </mdb-carousel-item>
-    <!--/Third slide-->
-</mdb-carousel>
-<!--/.Carousel Wrapper-->
+    </div>
 </div>

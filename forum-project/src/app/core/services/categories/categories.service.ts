@@ -1,0 +1,57 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { AppState } from '../../store/app.state';
+import { Store, select } from '@ngrx/store';
+import { CategoryEditModel } from '../../store/models/categoryEdit.model';
+import { GetAllCategories, Add, Edit, Delete } from '../../store/categories/categories.actions';
+import { CategoryModel } from '../../store/models/category.model';
+import { ResponseModel } from '../../models/response.model';
+
+const allCategoriesUrl = 'http://localhost:5000/category/all';
+const createCategoryUrl = 'http://localhost:5000/category/create';
+const editCategoryUrl = 'http://localhost:5000/category/edit/';
+const deleteCategoryUrl = 'http//localhost:5000/category/delete/';
+
+@Injectable()
+export class CategoriesService {
+
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private router: Router,
+    private store: Store<AppState>) {
+  }
+
+  getAllCategories() {
+    this.http.get<CategoryEditModel[]>(allCategoriesUrl)
+      .subscribe(categories => {
+        this.store.dispatch(new GetAllCategories(categories));
+      });
+  }
+
+  addCategory(model: CategoryModel) {
+    this.http.post(createCategoryUrl, model)
+      .subscribe((newCat: ResponseModel) => {
+        this.store.dispatch(new Add(newCat.data));
+        this.toastr.success(newCat.message);
+    });
+  }
+
+  editCategory(id: string, model: CategoryEditModel) {
+    this.http.post(editCategoryUrl + id, model)
+      .subscribe((editCat: ResponseModel) => {
+        this.store.dispatch(new Edit(editCat.data));
+        this.toastr.info(editCat.message);
+      });
+  }
+
+  deleteCategory(id: string) {
+    this.http.delete(deleteCategoryUrl + id)
+      .subscribe((res: ResponseModel) => {
+        this.store.dispatch(new Delete(id));
+        this.toastr.success(res.message);
+      });
+  }
+}

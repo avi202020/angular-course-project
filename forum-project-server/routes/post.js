@@ -115,7 +115,7 @@ router.post('/edit/:id', authCheck, async (req, res) => {
             res.status(200).json({
               success: true,
               message: 'Post edited successfully.',
-              data: editedPost
+              data: editedPost.populate('comments')
             })
           })
           .catch((err) => {

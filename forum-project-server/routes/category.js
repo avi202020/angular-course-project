@@ -126,6 +126,7 @@ router.get('/all', (req, res) => {
   Category
     .find()
     .then(categories => {
+      categories = categories.sort((a, b) => a.name.localeCompare(b.name))
       res.status(200).json(categories)
     })
 })

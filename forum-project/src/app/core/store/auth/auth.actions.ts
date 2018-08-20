@@ -3,14 +3,15 @@ import { AuthModel } from '../models/auth.model';
 
 export const AUTH = '[AUTH] Auth';
 export const LOGOUT = '[AUTH] Logout';
+
 export class Auth implements Action {
-  type: string = AUTH;
+  readonly type: string = AUTH;
 
   constructor(public payload: AuthModel) { }
 }
 
 export class Logout implements Action {
-  type: string = LOGOUT;
+  readonly type: string = LOGOUT;
 
   constructor() { }
 }
