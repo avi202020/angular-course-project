@@ -7,6 +7,7 @@ let postSchema = new mongoose.Schema({
   body: {type: mongoose.Schema.Types.String, required: REQUIRED_VALIDATION_MESSAGE},
   creationDate: {type: mongoose.Schema.Types.Date, required: REQUIRED_VALIDATION_MESSAGE, default: Date.now},
   author: {type: mongoose.Schema.Types.ObjectId, required: REQUIRED_VALIDATION_MESSAGE, ref: 'User'},
+  authorName: {type: mongoose.Schema.Types.String, required: REQUIRED_VALIDATION_MESSAGE, ref: 'User'},
   category: {type: mongoose.Schema.Types.ObjectId, required: REQUIRED_VALIDATION_MESSAGE, ref: 'Category'},
   comments: [{type: mongoose.Schema.Types.ObjectId, default: [], ref: 'Comment'}]
 })
