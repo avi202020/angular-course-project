@@ -18,7 +18,6 @@ async function validateCommentCreateForm (payload) {
   if (!isFormValid) {
     message = 'Check the form for errors.'
   }
-
   return {
     success: isFormValid,
     message,
@@ -89,7 +88,7 @@ router.post('/edit/:id', authCheck, async (req, res) => {
     })
   if (req.user._id.toString() === existingComment.creator.toString() || req.user.roles.indexOf('Admin') > -1) {
     const commentObj = req.body
-    const validationResult = validateCommentCreateForm(commentObj)
+    const validationResult = await validateCommentCreateForm(commentObj)
     if (!validationResult.success) {
       return res.status(401).json({
         success: false,
@@ -100,7 +99,6 @@ router.post('/edit/:id', authCheck, async (req, res) => {
 
     existingComment.text = commentObj.text
     existingComment.creationDate = Date.now()
-
     existingComment
       .save()
       .then(editedComment => {

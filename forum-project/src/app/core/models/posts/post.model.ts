@@ -7,6 +7,6 @@ export class PostModel {
   public creationDate;
   public author: string;
   public authorName: string;
-  public category: string;
+  public category;
   public comments: CommentModel[];
 }

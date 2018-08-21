@@ -6,6 +6,6 @@ export class PostAllModel {
     public title: string,
     public body: string,
     public authorName: string,
-    public category: string,
+    public category,
     public creationDate: Date) { }
 }

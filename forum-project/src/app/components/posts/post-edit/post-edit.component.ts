@@ -12,7 +12,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   templateUrl: './post-edit.component.html',
   styleUrls: ['./post-edit.component.scss']
 })
-export class PostEditComponent implements OnInit {
+export class PostEditComponent {
   protected postId: string;
   protected editForm;
   protected categories;
@@ -41,7 +41,8 @@ export class PostEditComponent implements OnInit {
             this.editForm = this.fb.group({
               category: [post.category.name, [Validators.required]],
               title: [post.title, [Validators.required, Validators.minLength(6)]],
-              body: [post.body, [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]]
+              body: [post.body, [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
+              authorName: [post.authorName]
             });
 
             console.log(this.editForm);
@@ -52,10 +53,6 @@ export class PostEditComponent implements OnInit {
         });
   }
 
-  ngOnInit() {
-   
- }
-
   get category() { return this.editForm.get('category'); }
 
   get title() { return this.editForm.get('title'); }
@@ -64,7 +61,6 @@ export class PostEditComponent implements OnInit {
 
   editPost() {
     const form = this.editForm.value;
-    form.authorName = this.authService.userName;
     this.postService.editPost(this.postId, form);
   }
 }

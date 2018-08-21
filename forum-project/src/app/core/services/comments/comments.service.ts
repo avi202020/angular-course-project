@@ -4,17 +4,15 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AppState } from '../../store/app.state';
 import { Store, select } from '@ngrx/store';
-import { GetAllPosts, Add, Edit, Delete } from '../../store/posts/post.actions';
-import { PostModel } from '../../models/posts/post.model';
+import { AddComment, EditComment, DeleteComment } from '../../store/posts/post.actions';
 import { ResponseModel } from '../../models/response.model';
 
-const allPostsUrl = 'http://localhost:5000/post/all';
-const createPostUrl = 'http://localhost:5000/post/create';
-const editPostUrl = 'http://localhost:5000/post/edit/';
-const deletePostUrl = 'http://localhost:5000/post/delete/';
+const createCommentUrl = 'http://localhost:5000/comment/create';
+const editCommentUrl = 'http://localhost:5000/comment/edit/';
+const deleteCommentUrl = 'http://localhost:5000/comment/delete/';
 
 @Injectable()
-export class PostsService {
+export class CommentsService {
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
@@ -22,37 +20,28 @@ export class PostsService {
     private store: Store<AppState>) {
   }
 
-  getAllPosts() {
-    this.http.get<PostModel[]>(allPostsUrl)
-      .subscribe(posts => {
-        this.store.dispatch(new GetAllPosts(posts));
-      });
-  }
-
-  addPost(model) {
-    this.http.post(createPostUrl, model)
+  createComment(id: string, model) {
+    this.http.post(createCommentUrl, model)
       .subscribe((newCat: ResponseModel) => {
-        this.store.dispatch(new Add(newCat.data));
+        this.store.dispatch(new AddComment(newCat.data));
         this.toastr.success(newCat.message);
-        this.router.navigate(['/posts']);
+        this.router.navigate([`/posts/details/${id}`]);
     });
   }
 
-  editPost(id: string, model: PostModel) {
-    this.http.post(editPostUrl + id, model)
+  editComment(id: string, model) {
+    this.http.post(editCommentUrl + id, model)
       .subscribe((editCat: ResponseModel) => {
-        this.store.dispatch(new Edit(editCat.data));
+        this.store.dispatch(new EditComment(editCat.data));
         this.toastr.info(editCat.message);
-        this.router.navigate([`/posts/details/${id}`]);
-      });
+    });
   }
 
-  deletePost(id: string) {
-    this.http.delete(deletePostUrl + id)
+  deleteComment(id: string, postId: string) {
+    this.http.delete(deleteCommentUrl + id)
       .subscribe((res: ResponseModel) => {
-        this.store.dispatch(new Delete(id));
+        this.store.dispatch(new DeleteComment(id, postId));
         this.toastr.success(res.message);
-        this.router.navigate(['/posts']);
     });
   }
 

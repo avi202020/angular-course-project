@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { AppState } from '../../../core/store/app.state';
 import { Store, select } from '@ngrx/store';
 import { PostAllModel } from '../../../core/models/posts/postAll.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CategoryEditModel } from '../../../core/models/category/categoryEdit.model';
 
 @Component({
@@ -14,17 +14,16 @@ import { CategoryEditModel } from '../../../core/models/category/categoryEdit.mo
   templateUrl: './posts-all.component.html',
   styleUrls: ['./posts-all.component.scss']
 })
-export class PostsAllComponent extends BaseComponent implements OnInit {
-  protected posts: Array<PostAllModel>;
+export class PostsAllComponent extends BaseComponent {
+  protected posts = [];
   postSubscription$: Subscription;
   protected pageSize = 6;
   protected currentPage = 1;
+  protected category = '';
+  protected postsToShow;
 
-  constructor(protected postsService: PostsService, private store: Store<AppState>, private router: Router) {
+  constructor(protected postsService: PostsService, private store: Store<AppState>, private router: Router, private route: ActivatedRoute) {
     super();
-   }
-
-  ngOnInit() {
     this.posts = [];
     this.postsService.getAllPosts();
     this.postSubscription$ = this.store
@@ -34,16 +33,33 @@ export class PostsAllComponent extends BaseComponent implements OnInit {
           this.posts = [];
           const postsS = posts
             .sort((a: PostModel, b: PostModel) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime())
-            .slice(0, 12);
           console.log(postsS);
           for (const i of postsS) {
             const obj = new PostAllModel(i._id, i.title, i.body, i.authorName, i.category, new Date(i.creationDate));
             this.posts.push(obj);
           }
+          console.log(posts);
+          console.log(this.category);
+          if (this.category !== undefined) {
+            this.postsToShow = this.posts.filter(p => p.category._id === this.category);
+          } else {
+            this.postsToShow = this.posts;
+          }
         }
       });
+      this.route.queryParams.subscribe((params) => {
+        if (params) {
+          this.category = params.c;
+        }
+        if (this.category !== undefined) {
+          this.postsToShow = this.posts.filter(p => p.category._id === this.category);
+        } else {
+          this.postsToShow = this.posts;
+        }
+      });
+      console.log(this.category);
       this.subscriptions.push(this.postSubscription$);
-  }
+   }
 
   changePage (page) {
     this.currentPage = page;

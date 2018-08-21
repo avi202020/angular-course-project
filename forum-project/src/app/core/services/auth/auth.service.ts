@@ -43,7 +43,7 @@ export class AuthService {
     this.cookieService.delete('token');
     this.store.dispatch(new Logout());
     this.toastr.success('Logout successful!');
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
   isAuthenticated(): boolean {

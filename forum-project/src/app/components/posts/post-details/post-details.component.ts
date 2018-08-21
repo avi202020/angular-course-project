@@ -7,33 +7,35 @@ import { BaseComponent } from '../../base.component';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { PostsService } from '../../../core/services/posts/posts.service';
+import { CommentsService } from '../../../core/services/comments/comments.service';
+import { MatDialog } from '@angular/material';
+import { CommentEditComponent } from '../../comments/comment-edit/comment-edit.component';
 
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
   styleUrls: ['./post-details.component.scss']
 })
-export class PostDetailsComponent extends BaseComponent implements OnInit {
+export class PostDetailsComponent extends BaseComponent {
   protected postId: string;
   protected post: PostModel;
   private subscription$: Subscription;
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute,
-    protected authService: AuthService, private postService: PostsService) {
+    protected authService: AuthService, private postService: PostsService, private commentService: CommentsService,
+    public dialog: MatDialog) {
     super();
-   }
-
-  ngOnInit() {
     this.postId = this.route.snapshot.paramMap.get('id');
     this.subscription$ = this.store
-      .pipe(select(store => store.posts.all))
+      .pipe(select(st => st.posts.all))
       .subscribe(posts => {
         if (posts.length > 0) {
           this.post = posts.find(p => p._id === this.postId);
+          this.post.creationDate = new Date(this.post.creationDate);
         }
       });
       this.subscriptions.push(this.subscription$);
-  }
+   }
 
   sameAuthor(): boolean {
     return this.authService.userName === this.post.authorName;
@@ -41,5 +43,23 @@ export class PostDetailsComponent extends BaseComponent implements OnInit {
 
   delete(): void {
     this.postService.deletePost(this.post._id);
+  }
+
+  deleteComment(id: string) {
+    console.log(id);
+    console.log(this.post._id);
+    this.commentService.deleteComment(id, this.post._id);
+  }
+
+  openEditCommentDialog (comment): void {
+    const dialogRef = this.dialog.open(CommentEditComponent, {
+      width: '600px',
+      height: '300px',
+      data: {comment}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 }

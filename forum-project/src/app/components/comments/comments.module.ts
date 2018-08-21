@@ -1,28 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { postsComponents } from '.';
-import { PostsRoutingModule } from './posts.routing';
+import { commentsComponents } from '.';
+import { CommentsRoutingModule } from './comments.routing';
 import { SharedModule } from '../../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
-    ...postsComponents,
+    ...commentsComponents,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    PostsRoutingModule,
+    CommentsRoutingModule,
     SharedModule,
     NgxPaginationModule
   ],
   exports: [
-    ...postsComponents
+    ...commentsComponents
   ],
   entryComponents: [
-    ...postsComponents
+    ...commentsComponents
   ]
 })
-export class PostsModule { }
+export class CommentsModule { }

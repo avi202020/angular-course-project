@@ -28,6 +28,7 @@ import { environment } from '../environments/environment';
 import { storeLogger } from 'ngrx-store-logger';
 import { AppState } from './core/store/app.state';
 import { CategoryModule } from './components/category/category.module';
+import { CommentsModule } from './components/comments/comments.module';
 
 export function logger(reducer: ActionReducer<AppState>): any {
   return storeLogger()(reducer);
@@ -47,6 +48,7 @@ export const metaReducers = environment.production ? [] : [logger];
     BrowserAnimationsModule,
     BrowserModule,
     CategoryModule,
+    CommentsModule,
     GuardsModule,
     HttpClientModule,
     PostsModule,
