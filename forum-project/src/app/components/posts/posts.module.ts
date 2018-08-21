@@ -4,17 +4,25 @@ import { NgModule } from '@angular/core';
 import { postsComponents } from '.';
 import { PostsRoutingModule } from './posts.routing';
 import { PostsListComponent } from './posts-list/posts-list.component';
+import { SharedModule } from '../../shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PostsCreateComponent } from './post-create/post-create.component';
+import { PostEditComponent } from './post-edit/post-edit.component';
 
 @NgModule({
   declarations: [
     ...postsComponents,
-    PostsListComponent
+    PostsListComponent,
+    PostsCreateComponent,
+    PostEditComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    PostsRoutingModule
+    PostsRoutingModule,
+    SharedModule,
+    NgxPaginationModule
   ],
   exports: [
     ...postsComponents

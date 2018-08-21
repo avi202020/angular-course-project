@@ -54,6 +54,7 @@ async function validatePostForm (payload) {
 
 router.post('/create', authCheck, async (req, res) => {
   const postObj = req.body
+  console.log(postObj)
   const validationResult = await validatePostForm(postObj)
   if (!validationResult.success) {
     return res.status(400).json({
@@ -65,6 +66,7 @@ router.post('/create', authCheck, async (req, res) => {
   postObj.category = validationResult.categoryId
   postObj.author = req.user._id
 
+  console.log(postObj)
   Post
     .create(postObj)
     .then((createdPost) => {
@@ -115,7 +117,7 @@ router.post('/edit/:id', authCheck, async (req, res) => {
             res.status(200).json({
               success: true,
               message: 'Post edited successfully.',
-              data: editedPost.populate('comments')
+              data: editedPost.populate('category').populate('comments')
             })
           })
           .catch((err) => {
@@ -146,6 +148,7 @@ router.post('/edit/:id', authCheck, async (req, res) => {
 router.get('/all', (req, res) => {
   Post
     .find()
+    .populate('category')
     .populate('comments')
     .then(posts => {
       res.status(200).json(posts)

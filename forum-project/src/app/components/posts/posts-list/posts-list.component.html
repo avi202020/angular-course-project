@@ -4,9 +4,9 @@
       <h1>Latest Posts</h1>
     </div>
   </div>
-  <div class="col-md-12 row">
-    <div class="col-sm-4 col-lg-4 col-md-4" *ngIf="posts; else notFound">
-      <div class="figure post-body" *ngFor="let p of posts">
+  <div class="col-md-12 row" *ngIf="posts; else notFound">
+    <div class="col-md-4" *ngFor="let p of posts">
+      <div class="figure post-body">
         <a routerLink="/posts/details/{{p._id}}">
           <div class="card card-body btn-custom">
             <div class="figure post-body">
@@ -16,7 +16,7 @@
               <div>{{p.body.substr(0, 50)}}</div>
             </div>
             <div>
-                <p>{{parseDate(p.creationDate)}}</p>
+                <p>{{p.creationDate.toLocaleString()}}</p>
             </div>
           </div>
         </a>

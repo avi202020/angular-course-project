@@ -1,7 +1,33 @@
 <div *ngIf="post; else notFound">
-    <p>{{post.title}}</p>
-    <p>{{post.body}}</p>
+    <h1 class="mt-4">{{post.title}}</h1>
+    <p class="lead">published by {{post.authorName}}</p>
+    <div>
+      <p class="lead">{{post.body}}</p>
+    </div>
+    <div *ngIf="authService.isAuthenticated() || authService.isAdmin()">
+      <a mat-button routerLink="/comments/{{post._id}}">Add Comment</a>
+      <a mat-button routerLink="/posts/edit/{{post._id}}" *ngIf="sameAuthor() || authService.isAdmin()">Edit</a>
+      <a mat-button *ngIf="sameAuthor() || authService.isAdmin()" (click)="delete()">Delete</a>
+    </div>
+    <div *ngIf="post.comments.length > 0; else noComments">
+      <h4>Comments:</h4>
+      <div class="media-body" *ngFor="let c of post.comments">
+        <h5 class="mt-0">by <strong>{{c.creatorName}}</strong></h5>
+        on {{c.creationDate}}
+        <div>
+          {{c.text}}
+        </div>
+        <div *ngIf="c.creatorName === authService.userName">
+          <a mat-button routerLink="/comments/edit/{{c._id}}">Edit my comment</a>
+          <a mat-button (click)="deleteComment()">Delete my comment</a>
+        </div>
+      </div>
+    </div>
 </div>
+
 <ng-template #notFound>
   <span>Post not found.</span>
+</ng-template>
+<ng-template #noComments>
+  <h4><strong>No comments.</strong></h4>
 </ng-template>

@@ -5,6 +5,8 @@ import { PostModel } from '../../../core/models/posts/post.model';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { PostsService } from '../../../core/services/posts/posts.service';
 
 @Component({
   selector: 'app-post-details',
@@ -16,7 +18,8 @@ export class PostDetailsComponent extends BaseComponent implements OnInit {
   protected post: PostModel;
   private subscription$: Subscription;
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+  constructor(private store: Store<AppState>, private route: ActivatedRoute,
+    protected authService: AuthService, private postService: PostsService) {
     super();
    }
 
@@ -25,8 +28,18 @@ export class PostDetailsComponent extends BaseComponent implements OnInit {
     this.subscription$ = this.store
       .pipe(select(store => store.posts.all))
       .subscribe(posts => {
-        this.post = posts.find(p => p._id === this.postId);
+        if (posts.length > 0) {
+          this.post = posts.find(p => p._id === this.postId);
+        }
       });
       this.subscriptions.push(this.subscription$);
+  }
+
+  sameAuthor(): boolean {
+    return this.authService.userName === this.post.authorName;
+  }
+
+  delete(): void {
+    this.postService.deletePost(this.post._id);
   }
 }

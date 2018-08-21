@@ -16,6 +16,7 @@ const registerUrl = 'http://localhost:5000/auth/signup';
 export class AuthService {
   private isAuthenticate: boolean;
   private isUserAdmin: boolean;
+  private username: string;
 
   constructor(
     private http: HttpClient,
@@ -26,6 +27,7 @@ export class AuthService {
       .subscribe(auth => {
           this.isAuthenticate = auth.isLoggedIn;
           this.isUserAdmin = auth.isAdmin;
+          this.username = auth.username;
       });
   }
 
@@ -50,5 +52,9 @@ export class AuthService {
 
   isAdmin(): boolean {
     return this.isUserAdmin;
+  }
+
+  get userName() {
+    return this.username;
   }
 }

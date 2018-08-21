@@ -9,8 +9,4 @@ export class PostsListComponent {
   @Input() posts;
   constructor() { }
 
-  parseDate(creationDate: string): String {
-    const date = new Date(creationDate);
-    return date.toUTCString();
-  }
 }

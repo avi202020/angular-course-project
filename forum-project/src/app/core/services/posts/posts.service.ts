@@ -11,7 +11,7 @@ import { ResponseModel } from '../../models/response.model';
 const allPostsUrl = 'http://localhost:5000/post/all';
 const createPostUrl = 'http://localhost:5000/post/create';
 const editPostUrl = 'http://localhost:5000/post/edit/';
-const deletePostUrl = 'http//localhost:5000/post/delete/';
+const deletePostUrl = 'http://localhost:5000/post/delete/';
 
 @Injectable()
 export class PostsService {
@@ -32,27 +32,30 @@ export class PostsService {
       });
   }
 
-  addPost(model: PostModel) {
+  addPost(model) {
     this.http.post(createPostUrl, model)
       .subscribe((newCat: ResponseModel) => {
         this.store.dispatch(new Add(newCat.data));
         this.toastr.success(newCat.message);
+        this.router.navigate(['/posts']);
     });
   }
 
-  editCategory(id: string, model: PostModel) {
+  editPost(id: string, model: PostModel) {
     this.http.post(editPostUrl + id, model)
       .subscribe((editCat: ResponseModel) => {
         this.store.dispatch(new Edit(editCat.data));
         this.toastr.info(editCat.message);
+        this.router.navigate([`/posts/details/${id}`]);
       });
   }
 
-  deleteCategory(id: string) {
+  deletePost(id: string) {
     this.http.delete(deletePostUrl + id)
       .subscribe((res: ResponseModel) => {
         this.store.dispatch(new Delete(id));
         this.toastr.success(res.message);
-      });
+        this.router.navigate(['/posts']);
+    });
   }
 }
