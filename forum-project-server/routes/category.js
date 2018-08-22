@@ -1,6 +1,7 @@
 const express = require('express')
 const authCheck = require('../config/auth-check')
 const Category = require('../models/Category')
+const Post = require('../models/Post')
 
 const router = new express.Router()
 
@@ -134,23 +135,30 @@ router.get('/all', (req, res) => {
 router.delete('/delete/:id', authCheck, (req, res) => {
   const id = req.params.id
   if (req.user.roles.indexOf('Admin') > -1) {
-    Category
-      .findById(id)
-      .then((category) => {
-        category
-          .remove()
-          .then(() => {
-            return res.status(200).json({
-              success: true,
-              message: 'Category deleted successfully!'
+    Post
+      .find({category: id})
+      .then(categories => {
+        console.log(categories);
+        categories
+          .forEach(cat => cat.remove())
+        Category
+          .findById(id)
+          .then((category) => {
+            category
+              .remove()
+              .then(() => {
+                return res.status(200).json({
+                  success: true,
+                  message: 'Category deleted successfully!'
+                })
+              })
+          })
+          .catch(() => {
+            return res.status(401).json({
+              success: false,
+              message: 'Entry does not exist!'
             })
           })
-      })
-      .catch(() => {
-        return res.status(401).json({
-          success: false,
-          message: 'Entry does not exist!'
-        })
       })
   } else {
     return res.status(401).json({

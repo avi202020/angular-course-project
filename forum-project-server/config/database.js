@@ -28,7 +28,8 @@ module.exports = (settings) => {
         username: 'Admin',
         salt: salt,
         password: password,
-        roles: ['Admin']
+        roles: ['Admin'],
+        isBanned: false
       })
         .then(() => {
           User.find({}).then(users => {

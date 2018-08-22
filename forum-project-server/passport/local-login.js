@@ -22,11 +22,18 @@ module.exports = new PassportLocalStrategy({
         return done(error)
       }
 
+      if (user.isBanned) {
+        const error = new Error('Sorry, you are banned. Contact Admin.')
+        error.name = 'BannedError'
+        return done(error)
+      }
+
       const payload = {
         sub: user.id,
         username: user.username,
         email: user.email,
-        isAdmin: user.roles.includes('Admin')
+        isAdmin: user.roles.includes('Admin'),
+        isBanned: user.isBanned
       }
       const token = jwt.sign(payload, 's0m3 r4nd0m str1ng', {expiresIn: '1h'})
 

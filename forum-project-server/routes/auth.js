@@ -105,6 +105,13 @@ router.post('/login', (req, res, next) => {
         })
       }
 
+      if (err.name === 'BannedError') {
+        return res.status(401).json({
+          success: false,
+          message: err.message
+        })
+      }
+
       return res.status(401).json({
         success: false,
         message: 'Could not process the form.'
