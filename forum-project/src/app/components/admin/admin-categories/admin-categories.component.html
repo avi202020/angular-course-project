@@ -30,6 +30,7 @@
             <td>{{c.creationDate.toLocaleString()}}</td>
             <td><div>
               <button mat-raised-button mat-primary (click)="deleteCategory(c._id)">Delete</button>
+              <button mat-raised-button mat-primary (click)="openEditCategoryDialog(c)">Edit</button>
             </div></td>
         </tr>
       </tbody>

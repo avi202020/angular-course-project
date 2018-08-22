@@ -14,7 +14,7 @@
         <tr *ngFor="let u of users | paginate: { id: 'allUsers', itemsPerPage: pageSize, currentPage: currentPage}">
             <td>{{u.username}}</td>
             <td>{{u.dateRegistered.toLocaleString()}}</td>
-            <td>{{u.roles.isAdmin}}</td>
+            <td>{{u.roles.length > 0 ? true : false }}</td>
             <td>{{u.isBanned}}</td>
             <td><span *ngIf="!u.isBanned"><button mat-button (click)="banUser(u._id)">Ban</button></span>
             <span *ngIf="u.isBanned"><button mat-button (click)="unbanUser(u._id)">Unban</button></span></td>

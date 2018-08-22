@@ -138,7 +138,6 @@ router.delete('/delete/:id', authCheck, (req, res) => {
     Post
       .find({category: id})
       .then(categories => {
-        console.log(categories);
         categories
           .forEach(cat => cat.remove())
         Category

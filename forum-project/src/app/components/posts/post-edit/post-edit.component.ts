@@ -33,8 +33,7 @@ export class PostEditComponent {
               this.router.navigate(['404']);
               return;
             }
-
-            if (post.authorName !== this.authService.userName || this.authService.isAdmin()) {
+            if (post.authorName !== this.authService.userName || !this.authService.isAdmin()) {
               this.router.navigate(['/posts']);
               return;
             }

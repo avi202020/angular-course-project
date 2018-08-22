@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CategoriesService } from '../../../core/services/categories/categories.service';
+import { MatDialog } from '@angular/material';
+import { AdminEditCategoryComponent } from '../admin-edit-category/admin-edit-category.component';
 
 @Component({
   selector: 'app-admin-categories',
@@ -15,7 +17,7 @@ export class AdminCategoriesComponent {
   protected pageSize = 6;
   protected currentPage = 1;
 
-  constructor(protected fb: FormBuilder, private categoryService: CategoriesService) {
+  constructor(protected fb: FormBuilder, private categoryService: CategoriesService, public dialog: MatDialog) {
     this.createForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]]
     });
@@ -35,5 +37,17 @@ export class AdminCategoriesComponent {
 
   deleteCategory(id) {
     this.categoryService.deleteCategory(id);
+  }
+
+  openEditCategoryDialog (category): void {
+    const dialogRef = this.dialog.open(AdminEditCategoryComponent, {
+      width: '600px',
+      height: '300px',
+      data: {category}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 }
