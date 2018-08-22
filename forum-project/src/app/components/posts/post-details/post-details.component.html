@@ -17,7 +17,7 @@
         <div>
           {{c.text}}
         </div>
-        <div *ngIf="c.creatorName === authService.userName">
+        <div *ngIf="c.creatorName === authService.userName || authService.isAdmin()">
           <a mat-button (click)="openEditCommentDialog(c)">Edit my comment</a>
           <a mat-button (click)="deleteComment(c._id)">Delete my comment</a>
         </div>

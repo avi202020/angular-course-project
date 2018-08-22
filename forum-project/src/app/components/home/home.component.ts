@@ -68,7 +68,6 @@ export class HomeComponent extends BaseComponent implements OnInit {
           }
         }
       });
-      console.log(this.posts);
     this.subscriptions.push(this.categorySubscription$);
     this.subscriptions.push(this.postSubscription$);
   }

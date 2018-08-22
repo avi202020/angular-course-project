@@ -12,7 +12,7 @@ import { ResponseModel } from '../../models/response.model';
 const allCategoriesUrl = 'http://localhost:5000/category/all';
 const createCategoryUrl = 'http://localhost:5000/category/create';
 const editCategoryUrl = 'http://localhost:5000/category/edit/';
-const deleteCategoryUrl = 'http//localhost:5000/category/delete/';
+const deleteCategoryUrl = 'http://localhost:5000/category/delete/';
 
 @Injectable()
 export class CategoriesService {

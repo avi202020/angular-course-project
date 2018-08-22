@@ -3,7 +3,7 @@ import { AuthModel } from '../../models/auth/auth.model';
 import * as AuthActions from './auth.actions';
 
 const initialState: AuthState = {
-  auth: new AuthModel('', '', '', false, false)
+  auth: new AuthModel('', '', '', false, false, false)
 };
 
 export function authReducer (

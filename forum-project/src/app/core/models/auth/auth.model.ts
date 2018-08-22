@@ -4,6 +4,7 @@ export class AuthModel {
     public username: string,
     public email: string,
     public isLoggedIn: boolean,
-    public isAdmin: boolean
+    public isAdmin: boolean,
+    public isBanned: boolean
   ) { }
 }

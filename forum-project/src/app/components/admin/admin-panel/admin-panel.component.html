@@ -1,0 +1,10 @@
+<div>
+  <button mat-raised-button (click)="showCategories()">Show Categories</button>
+  <button mat-raised-button (click)="showUsers()">Show Users</button>
+</div>
+<div *ngIf="showCategory">
+    <app-admin-categories [categories]="categories"></app-admin-categories>
+</div>
+<div *ngIf="showUser">
+    <app-admin-users [users]="users"></app-admin-users>
+</div>

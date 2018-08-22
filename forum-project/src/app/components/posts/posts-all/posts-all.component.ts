@@ -7,7 +7,6 @@ import { AppState } from '../../../core/store/app.state';
 import { Store, select } from '@ngrx/store';
 import { PostAllModel } from '../../../core/models/posts/postAll.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CategoryEditModel } from '../../../core/models/category/categoryEdit.model';
 
 @Component({
   selector: 'app-posts-all',
@@ -29,10 +28,10 @@ export class PostsAllComponent extends BaseComponent {
     this.postSubscription$ = this.store
       .pipe(select(state => state.posts.all))
       .subscribe(posts => {
+        this.posts = [];
         if (posts.length > 0) {
-          this.posts = [];
           const postsS = posts
-            .sort((a: PostModel, b: PostModel) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime())
+            .sort((a: PostModel, b: PostModel) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime());
           console.log(postsS);
           for (const i of postsS) {
             const obj = new PostAllModel(i._id, i.title, i.body, i.authorName, i.category, new Date(i.creationDate));

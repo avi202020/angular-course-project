@@ -57,7 +57,7 @@ export class JWTInterceptor implements HttpInterceptor {
   private saveToken(res) {
     try {
       const decodedToken = jwt_decode(res.token);
-      const data = new AuthModel(res.token, decodedToken.username, decodedToken.email, true, decodedToken.isAdmin);
+      const data = new AuthModel(res.token, decodedToken.username, decodedToken.email, true, decodedToken.isAdmin, decodedToken.isBanned);
       this.store.dispatch(new Auth(data));
       this.cookieService.set('token', res.token);
       this.toastr.success(res.message);
