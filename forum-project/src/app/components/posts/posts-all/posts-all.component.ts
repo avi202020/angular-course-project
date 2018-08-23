@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PostModel } from '../../../core/models/posts/post.model';
 import { PostsService } from '../../../core/services/posts/posts.service';
 import { BaseComponent } from '../../base.component';
@@ -7,64 +7,65 @@ import { AppState } from '../../../core/store/app.state';
 import { Store, select } from '@ngrx/store';
 import { PostAllModel } from '../../../core/models/posts/postAll.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Select } from '../../../core/store/categories/category.actions';
+import { CategoryEditModel } from '../../../core/models/category/categoryEdit.model';
+import { CategoriesService } from '../../../core/services/categories/categories.service';
 
 @Component({
   selector: 'app-posts-all',
   templateUrl: './posts-all.component.html',
   styleUrls: ['./posts-all.component.scss']
 })
-export class PostsAllComponent extends BaseComponent {
+export class PostsAllComponent implements OnDestroy {
   protected posts = [];
-  postSubscription$: Subscription;
+  private postSubscription$: Subscription;
   protected pageSize = 6;
   protected currentPage = 1;
-  protected category = '';
   protected postsToShow;
+  protected categories;
+  protected selectedCategory = 'All';
+  protected allValue = 'All';
 
-  constructor(protected postsService: PostsService, private store: Store<AppState>, private router: Router, private route: ActivatedRoute) {
-    super();
-    this.posts = [];
+  constructor(protected postsService: PostsService, private store: Store<AppState>,
+    private router: Router, private categoryService: CategoriesService) {
     this.postsService.getAllPosts();
+    this.categoryService.getAllCategories();
+
     this.postSubscription$ = this.store
-      .pipe(select(state => state.posts.all))
-      .subscribe(posts => {
-        this.posts = [];
-        if (posts.length > 0) {
-          const postsS = posts
+      .pipe(select(state => state))
+      .subscribe(state => {
+        this.categories = state.categories.all;
+        this.posts = state.posts.all
             .sort((a: PostModel, b: PostModel) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime());
-          console.log(postsS);
-          for (const i of postsS) {
-            const obj = new PostAllModel(i._id, i.title, i.body, i.authorName, i.category, new Date(i.creationDate));
-            this.posts.push(obj);
-          }
-          console.log(posts);
-          console.log(this.category);
-          if (this.category !== undefined) {
-            this.postsToShow = this.posts.filter(p => p.category._id === this.category);
-          } else {
-            this.postsToShow = this.posts;
-          }
-        }
-      });
-      this.route.queryParams.subscribe((params) => {
-        if (params) {
-          this.category = params.c;
-        }
-        if (this.category !== undefined) {
-          this.postsToShow = this.posts.filter(p => p.category._id === this.category);
+        this.postsToShow = this.posts;
+        if (state.categories.selected.hasOwnProperty('_id')) {
+          this.postsToShow = this.posts.filter(p => p.category._id === state.categories.selected._id);
+          this.selectedCategory = state.categories.selected.name;
         } else {
           this.postsToShow = this.posts;
+          this.selectedCategory = 'All';
         }
       });
-      console.log(this.category);
-      this.subscriptions.push(this.postSubscription$);
-   }
+  }
 
   changePage (page) {
     this.currentPage = page;
   }
 
+  ngOnDestroy(): void {
+    this.selectAllCategories();
+    this.postSubscription$.unsubscribe();
+  }
+
   navigate(id: string) {
     this.router.navigate([`/posts/details/${id}`]);
+  }
+
+  selectAllCategories() {
+    this.store.dispatch(new Select(new CategoryEditModel));
+  }
+
+  changeCategory(c) {
+    this.store.dispatch(new Select(c));
   }
 }

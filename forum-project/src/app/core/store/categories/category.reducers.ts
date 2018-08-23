@@ -4,7 +4,8 @@ import { CategoryEditModel } from '../../models/category/categoryEdit.model';
 import * as CategoriesActions from './category.actions';
 
 const initialState: CategoryState = {
-  all: []
+  all: [],
+  selected: new CategoryEditModel
 };
 
 function getAllCategories(state, allRecipes) {
@@ -38,6 +39,10 @@ function deleteCategory(state: CategoryState, id: string) {
   return Object.assign({}, state, {all: state.all.filter(c => c._id !== id)});
 }
 
+function selectCategory(state: CategoryState, payload: CategoryEditModel) {
+  return Object.assign({}, state, {selected: payload});
+}
+
 export function categoryReducer (
   state: CategoryState = initialState,
   action: any) {
@@ -50,6 +55,8 @@ export function categoryReducer (
       return editCategory(state, action.payload);
     case CategoriesActions.DELETE_CATEGORY:
       return deleteCategory(state, action.id);
+    case CategoriesActions.SELECT:
+      return selectCategory(state, action.payload);
     default:
       return state;
   }

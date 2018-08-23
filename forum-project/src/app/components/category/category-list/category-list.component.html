@@ -4,14 +4,14 @@
       <div class="col-lg-6">
           <ul class="list-group">
               <li class="list-group-item btn-custom" *ngFor="let c of leftCatSet">
-                  <a routerLink="/posts" [queryParams]="{c: c._id}">{{c.name}}</a>
+                  <button mat-raised-button mat-primary (click)="changeCategory(c)">{{c.name}}</button>
               </li>
           </ul>
       </div>
       <div class="col-lg-6">
           <ul class="list-group">
               <li class="list-group-item btn-custom" *ngFor="let c of rightCatSet">
-                  <a routerLink="/posts" [queryParams]="{c: c._id}">{{c.name}}</a>
+                  <button mat-raised-button mat-primary (click)="changeCategory(c)">{{c.name}}</button>
               </li>
           </ul>
       </div>
