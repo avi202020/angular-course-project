@@ -5,8 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminRoutingModule } from './admin.routing';
-import { AdminEditCategoryComponent } from './admin-edit-category/admin-edit-category.component';
-import { AdminCategoriesComponent } from './admin-categories/admin-categories.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -19,6 +18,7 @@ import { AdminCategoriesComponent } from './admin-categories/admin-categories.co
     ReactiveFormsModule,
     SharedModule,
     NgxPaginationModule,
+    MDBBootstrapModule.forRoot()
   ],
   entryComponents: [
     ...adminComponents

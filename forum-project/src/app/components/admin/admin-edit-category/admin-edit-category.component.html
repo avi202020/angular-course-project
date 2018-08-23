@@ -2,7 +2,7 @@
 <mat-dialog-content>
   <form [formGroup]="editForm">
     <mat-form-field>
-      <textarea matInput formControlName="name" placeHolder="Body"></textarea>
+      <input matInput formControlName="name" placeHolder="Body" />
       <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">
         Body is required.
       </mat-error>
@@ -13,6 +13,6 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button [disabled]="!editForm.valid" mat-raised-button mat-primary (click)="editCategory()">Edit Category</button>
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <button [disabled]="!editForm.valid" mat-flat-button mat-primary (click)="editCategory()">Edit Category</button>
 </mat-dialog-actions>

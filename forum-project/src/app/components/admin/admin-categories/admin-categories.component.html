@@ -11,11 +11,11 @@
         </mat-error>
       </mat-form-field>
     </form>
-    <mat-dialog-actions align="center">
+    <mat-dialog-actions>
       <button [disabled]="!createForm.valid" mat-raised-button mat-primary (click)="createCategory()">Create Category</button>
     </mat-dialog-actions>
   </div>
-  <div class="row">
+  <div class="row topmargin">
     <table class="table table-hover table-bordered">
       <thead>
         <tr>
@@ -29,8 +29,8 @@
             <td>{{c.name}}</td>
             <td>{{c.creationDate.toLocaleString()}}</td>
             <td><div>
-              <button mat-raised-button mat-primary (click)="deleteCategory(c._id)">Delete</button>
-              <button mat-raised-button mat-primary (click)="openEditCategoryDialog(c)">Edit</button>
+              <button class="margin" mdbBtn type="button" color="danger" mdbWavesEffect size="sm" (click)="deleteCategory(c._id)">Delete</button>
+              <button mdbBtn type="button" color="warning" mdbWavesEffect size="sm" (click)="openEditCategoryDialog(c)">Edit</button>
             </div></td>
         </tr>
       </tbody>

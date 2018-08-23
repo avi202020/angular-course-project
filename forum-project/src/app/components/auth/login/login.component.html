@@ -22,6 +22,6 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
   <button [disabled]="!loginForm.valid" mat-raised-button mat-primary (click)="login()">Login</button>
 </mat-dialog-actions>
