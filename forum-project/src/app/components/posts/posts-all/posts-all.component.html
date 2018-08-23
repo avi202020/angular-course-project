@@ -1,6 +1,6 @@
 <div class="container mt-5" *ngIf="postsToShow">
   <div class="margin">
-    <h5>Select a category</h5>
+    <h5>Selected Category</h5>
     <mat-select name="category" placeholder="Select a Category" [(ngModel)]="selectedCategory">
       <mat-option [value]="allValue" (click)="selectAllCategories()">All</mat-option>
       <mat-option *ngFor="let c of categories" [value]="c.name" (click)="changeCategory(c)">{{c.name}}</mat-option>
