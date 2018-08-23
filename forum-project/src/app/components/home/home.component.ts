@@ -63,7 +63,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
             .slice(0, 12);
           console.log(postsS);
           for (const i of postsS) {
-            const obj = new PostHomeModel(i._id, i.title, i.body, new Date(i.creationDate));
+            const obj = new PostHomeModel(i._id, i.title, i.body, new Date(i.creationDate), i.category.name);
             this.posts.push(obj);
           }
         }
