@@ -7,7 +7,9 @@ import { LoginModel } from '../../models/auth/login.model';
 import { AppState } from '../../store/app.state';
 import { Store, select } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
-import { Logout } from '../../store/auth/auth.actions';
+import { Logout, Auth } from '../../store/auth/auth.actions';
+import * as jwt_decode from 'jwt-decode';
+import { AuthModel } from '../../models/auth/auth.model';
 
 const loginUrl = 'http://localhost:5000/auth/login';
 const registerUrl = 'http://localhost:5000/auth/signup';
@@ -29,6 +31,18 @@ export class AuthService {
           this.isUserAdmin = auth.isAdmin;
           this.username = auth.username;
       });
+
+      const cookie = this.cookieService.check('token');
+      if (cookie) {
+        const token = this.cookieService.get('token');
+        try {
+          const decodedToken = jwt_decode(token);
+          const data = new AuthModel(token, decodedToken.username, decodedToken.email, true, decodedToken.isAdmin, decodedToken.isBanned);
+          this.store.dispatch(new Auth(data));
+        } catch (err) {
+          this.toastr.error('Invalid Token');
+        }
+      }
   }
 
   register(body: RegisterModel) {

@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let p of postsToShow | paginate: { id: 'allPosts', itemsPerPage: pageSize, currentPage: currentPage}" (click)="navigate(p._id)">
+        <tr class="pointer" *ngFor="let p of postsToShow | paginate: { id: 'allPosts', itemsPerPage: pageSize, currentPage: currentPage}" (click)="navigate(p._id)">
             <td>{{p.title.substr(0, 50)}}</td>
             <td>{{p.body.substr(0, 50)}}</td>
             <td>{{p.authorName}}</td>
