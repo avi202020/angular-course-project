@@ -4,5 +4,5 @@ export class CommentModel {
   public creatorName: string;
   public text: string;
   public postId: string;
-  public creationDate: string;
+  public creationDate;
 }
