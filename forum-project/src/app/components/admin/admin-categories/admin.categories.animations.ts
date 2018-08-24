@@ -3,6 +3,8 @@ import {
   style,
   transition,
   animate,
+  group,
+  state,
 } from '@angular/animations';
 
 export const adminCategoriesAnimations = [
@@ -16,6 +18,7 @@ export const adminCategoriesAnimations = [
     ]),
     transition('* => void', [
       animate(1500, style({
+        backgroundColor: 'red',
         transform: 'translateX(100px)',
         opacity: 0
       }))

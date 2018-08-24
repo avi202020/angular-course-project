@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr [@cats] *ngFor="let u of users | paginate: { id: 'allUsers', itemsPerPage: pageSize, currentPage: currentPage}">
+        <tr *ngFor="let u of users | paginate: { id: 'allUsers', itemsPerPage: pageSize, currentPage: currentPage}">
             <td>{{u.username}}</td>
             <td>{{u.dateRegistered.toLocaleString()}}</td>
             <td>{{u.roles.length > 0 ? true : false }}</td>
