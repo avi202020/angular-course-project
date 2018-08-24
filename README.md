@@ -53,7 +53,7 @@ Banned users cannot create, edit, delete neither their posts nor their comments.
 	
 # Future Guidelines
 	Users can change password
-  Users upload their image
-  User profile
+  	Users upload their image
+  	User profile
 # Examples
 ![Home-Page](./forum-project/src/assets/home-page.png?raw=true)
