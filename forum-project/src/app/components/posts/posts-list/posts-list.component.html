@@ -19,7 +19,11 @@
         <a mdbBtn color="pink" rounded="true" size="md" class="waves-light" mdbWavesEffect routerLink="/posts/details/{{p._id}}" >Read more</a>
     </div>
     <ng-template #notFound>
-        <div class="col-md-12 row">No posts found.</div>
+        <div class="col-md-12 row">
+            <div class="page-header text-center offset-4 col-4">
+                <h1>No Latest Posts</h1>
+            </div>
+        </div>
     </ng-template>
   </div>
 </div>

@@ -13,9 +13,13 @@ const allCategoriesUrl = 'http://localhost:5000/category/all';
 const createCategoryUrl = 'http://localhost:5000/category/create';
 const editCategoryUrl = 'http://localhost:5000/category/edit/';
 const deleteCategoryUrl = 'http://localhost:5000/category/delete/';
+const cacheTime = 600000; // 10minutes
 
 @Injectable()
 export class CategoriesService {
+
+  private cachedCategories = false;
+  private lastTimeCalled: number;
 
   constructor(
     private http: HttpClient,
@@ -25,6 +29,13 @@ export class CategoriesService {
   }
 
   getAllCategories() {
+    const currentTime = new Date().getTime();
+    if (this.cachedCategories && (currentTime - this.lastTimeCalled < cacheTime)) {
+      return;
+    }
+    this.lastTimeCalled = currentTime;
+    this.cachedCategories = true;
+
     this.http.get<CategoryEditModel[]>(allCategoriesUrl)
       .subscribe(categories => {
         this.store.dispatch(new GetAllCategories(categories));

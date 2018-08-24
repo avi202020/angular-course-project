@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AdminService } from '../../../core/services/admin/admin.service';
+import { adminCategoriesAnimations } from '../admin-categories/admin-categories.animations';
 
 @Component({
   selector: 'app-admin-users',
   templateUrl: './admin-users.component.html',
-  styleUrls: ['./admin-users.component.scss']
+  styleUrls: ['./admin-users.component.scss'],
+  animations: adminCategoriesAnimations
 })
 export class AdminUsersComponent {
   @Input() users;

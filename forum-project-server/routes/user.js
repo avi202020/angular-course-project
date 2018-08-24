@@ -145,7 +145,9 @@ router.get('/all', authCheck, (req, res) => {
     User
       .find()
       .then(users => {
-        res.status(200).json(users)
+        let sentUsers = []
+        users.forEach(u => sentUsers.push({_id: u._id, email: u.email, username: u.username, roles: u.roles, isBanned: u.isBanned, dateRegistered: u.dateRegistered}))
+        res.status(200).json(sentUsers)
       })
   } else {
     return res.status(401).json({

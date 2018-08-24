@@ -7,25 +7,41 @@ import { Store, select } from '@ngrx/store';
 import { GetAllPosts, Add, Edit, Delete } from '../../store/posts/post.actions';
 import { PostModel } from '../../models/posts/post.model';
 import { ResponseModel } from '../../models/response.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const allPostsUrl = 'http://localhost:5000/post/all';
 const createPostUrl = 'http://localhost:5000/post/create';
 const editPostUrl = 'http://localhost:5000/post/edit/';
 const deletePostUrl = 'http://localhost:5000/post/delete/';
+const cacheTime = 120000; // 2minutes
 
 @Injectable()
 export class PostsService {
+
+  private cachedPosts = false;
+  private lastTimeCalled: number;
+
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
     private router: Router,
-    private store: Store<AppState>) {
+    private store: Store<AppState>, private spinner: NgxSpinnerService) {
   }
 
   getAllPosts() {
+    const currentTime = new Date().getTime();
+
+    if (this.cachedPosts && (currentTime - this.lastTimeCalled < cacheTime)) {
+      return;
+    }
+    this.cachedPosts = true;
+    this.lastTimeCalled = currentTime;
+
+    this.spinner.show();
     this.http.get<PostModel[]>(allPostsUrl)
       .subscribe(posts => {
         this.store.dispatch(new GetAllPosts(posts));
+        this.spinner.hide();
       });
   }
 
@@ -54,21 +70,5 @@ export class PostsService {
         this.toastr.success(res.message);
         this.router.navigate(['/posts']);
     });
-  }
-
-  getPostById(id: string): boolean {
-    this.store
-      .pipe(select(st => st.posts.all))
-      .subscribe(posts => {
-        if (posts.length > 0) {
-          const post = posts.find(p => p._id === id);
-          if (!post) {
-            return false;
-          }
-          return true;
-        }
-          return false;
-    });
-    return false;
   }
 }

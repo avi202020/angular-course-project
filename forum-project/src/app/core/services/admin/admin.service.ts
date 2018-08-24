@@ -30,7 +30,6 @@ export class AdminService {
   banUser(userId) {
     this.http.post(banUserUrl, {user: userId})
       .subscribe((newCat: ResponseModel) => {
-        debugger;
         this.store.dispatch(new Ban(newCat.data));
         this.toastr.success(newCat.message);
       });

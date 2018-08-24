@@ -56,15 +56,13 @@ export class HomeComponent extends BaseComponent implements OnInit {
     this.postSubscription$ = this.store
       .pipe(select(state => state.posts.all))
       .subscribe(posts => {
-        if (posts.length > 0) {
-          this.posts = [];
-          const postsS = posts
-            .sort((a: PostModel, b: PostModel) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime())
-            .slice(0, 12);
-          for (const i of postsS) {
-            const obj = new PostHomeModel(i._id, i.title, i.body, new Date(i.creationDate), i.category.name);
-            this.posts.push(obj);
-          }
+        this.posts = [];
+        const postsS = posts
+          .sort((a: PostModel, b: PostModel) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime())
+          .slice(0, 6);
+        for (const i of postsS) {
+          const obj = new PostHomeModel(i._id, i.title, i.body, new Date(i.creationDate), i.category.name);
+          this.posts.push(obj);
         }
       });
     this.subscriptions.push(this.categorySubscription$);

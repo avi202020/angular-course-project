@@ -70,11 +70,24 @@ router.post('/create', authCheck, async (req, res) => {
   Post
     .create(postObj)
     .then((createdPost) => {
-      res.status(200).json({
-        success: true,
-        message: 'Post added successfully.',
-        data: createdPost
-      })
+      Post
+        .findById(createdPost.id)
+        .populate('category')
+        .then((post) => {
+          res.status(200).json({
+            success: true,
+            message: 'Post added successfully.',
+            data: post
+          })
+        })
+        .catch((err) => {
+          console.log(err)
+          let message = 'Skusaa neshto'
+          return res.status(401).json({
+            success: false,
+            message: message
+          })
+        })
     })
     .catch((err) => {
       console.log(err)
@@ -114,11 +127,25 @@ router.post('/edit/:id', authCheck, async (req, res) => {
         existingPost
           .save()
           .then(editedPost => {
-            res.status(200).json({
-              success: true,
-              message: 'Post edited successfully.',
-              data: editedPost.populate('category').populate('comments')
-            })
+            Post
+              .findById(editedPost._id)
+              .populate('category')
+              .populate('comments')
+              .then((post) => {
+                res.status(200).json({
+                  success: true,
+                  message: 'Post edited successfully.',
+                  data: post
+                })
+              })
+              .catch((err) => {
+                console.log(err)
+                let message = 'Skusa neshto'
+                return res.status(401).json({
+                  success: false,
+                  message: message
+                })
+              })
           })
           .catch((err) => {
             console.log(err)
