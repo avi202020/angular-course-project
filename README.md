@@ -6,7 +6,7 @@
 Users can register, login and logout in the forum app. Unauthenticated users can only view posts.
 On the other hand, authenticated users can create, edit and delete their posts and comments.
 Administrators can add, edit, delete categories, ban and unban users, and delete other users' posts and comments.
-#App Build Setup
+# App Build Setup
 ```
 # install dependencies
 1. npm install
