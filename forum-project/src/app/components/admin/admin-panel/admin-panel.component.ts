@@ -27,7 +27,9 @@ export class AdminPanelComponent extends BaseComponent {
       .pipe(select(st => st))
       .subscribe(st => {
         this.users = st.users.all;
+        this.users.forEach(u => u.dateRegistered = new Date(u.dateRegistered));
         this.categories = st.categories.all.sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime());
+        this.categories.forEach(c => c.creationDate = new Date(c.creationDate));
       });
 
     this.subscriptions.push(this.subscription$);

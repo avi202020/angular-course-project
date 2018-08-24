@@ -6,26 +6,31 @@ import { AppState } from '../../../core/store/app.state';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { PostEditModel } from '../../../core/models/posts/postEdit.model';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { BaseComponent } from '../../base.component';
 
 @Component({
   selector: 'app-post-edit',
   templateUrl: './post-edit.component.html',
   styleUrls: ['./post-edit.component.scss']
 })
-export class PostEditComponent {
+export class PostEditComponent extends BaseComponent {
   protected postId: string;
   protected editForm;
   protected categories;
+  private subscriptionCat$: Subscription;
+  private subscriptionPost$: Subscription;
 
   constructor(private route: ActivatedRoute, private postService: PostsService,
     private store: Store<AppState>, private router: Router, private authService: AuthService, protected fb: FormBuilder) {
+      super();
       this.postId = this.route.snapshot.paramMap.get('id');
-      this.store
+      this.subscriptionCat$ = this.store
       .pipe(select(st => st.categories.all))
       .subscribe(categories => {
         this.categories = categories;
       });
-      this.store.pipe(select(st => st.posts.all))
+      this.subscriptionPost$ = this.store.pipe(select(st => st.posts.all))
         .subscribe(posts => {
           if (posts.length > 0) {
             const post = posts.find(p => p._id === this.postId);
@@ -50,6 +55,9 @@ export class PostEditComponent {
             return;
           }
         });
+
+      this.subscriptions.push(this.subscriptionCat$);
+      this.subscriptions.push(this.subscriptionPost$);
   }
 
   get category() { return this.editForm.get('category'); }

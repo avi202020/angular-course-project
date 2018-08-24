@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
   <span>
-      <a routerLink="/" mat-button><span><img src="../../../assets/forum.png" height="26px"><span>Forum</span></span></a>
-      <a routerLink="/posts" mat-button>Posts</a>
-      <a routerLink="/posts/create" mat-button *ngIf="authService.isAuthenticated()">Create Post</a>
+      <a routerLink="/" mat-button class="text-white"><span><mat-icon>forum</mat-icon><span>Forum</span></span></a>
+      <a routerLink="/posts" mat-button class="text-white">Posts</a>
+      <a routerLink="/posts/create" mat-button *ngIf="authService.isAuthenticated()" class="text-white">Create Post</a>
   </span>
   <span class="blankSpace"></span>
   <span *ngIf="!authService.isAuthenticated(); else notAuthenticated">
@@ -11,8 +11,8 @@
   </span>
   <ng-template #notAuthenticated>
       <span>
-        <a routerLink="/about" mat-button>About</a>
-        <a *ngIf="authService.isAdmin()" routerLink="/admin" mat-button>Admin</a>
+        <a routerLink="/about" mat-button class="text-white">About</a>
+        <a *ngIf="authService.isAdmin()" routerLink="/admin" mat-button class="text-white">Admin</a>
         <button mat-button (click)="authService.logout()">Logout</button>
       </span>
   </ng-template>

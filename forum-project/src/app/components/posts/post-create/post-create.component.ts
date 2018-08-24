@@ -7,6 +7,7 @@ import { BaseComponent } from '../../base.component';
 import { FormBuilder, Validators } from '@angular/forms';
 import { PostsService } from '../../../core/services/posts/posts.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-posts-create',
@@ -16,6 +17,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 export class PostsCreateComponent extends BaseComponent implements OnInit {
   protected categories: CategoryEditModel[];
   protected createForm;
+  private subscription$: Subscription;
 
   constructor(private categoryService: CategoriesService, private store: Store<AppState>,
     protected fb: FormBuilder, private postService: PostsService, private authService: AuthService) {
@@ -30,11 +32,12 @@ export class PostsCreateComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.categoryService.getAllCategories();
-    this.store
+    this.subscription$ = this.store
       .pipe(select(store => store.categories.all))
       .subscribe(categories => {
         this.categories = categories;
       });
+    this.subscriptions.push(this.subscription$);
   }
 
   createPost() {

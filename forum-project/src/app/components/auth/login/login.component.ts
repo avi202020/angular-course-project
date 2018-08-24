@@ -29,6 +29,7 @@ export class LoginComponent extends BaseComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
   login(): void {
     const form = this.loginForm.value;
     this.authService.login(new LoginModel(form.email, form.password))

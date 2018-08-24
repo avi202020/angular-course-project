@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { CategoriesService } from '../../../core/services/categories/categories.service';
 import { MatDialog } from '@angular/material';
 import { AdminEditCategoryComponent } from '../admin-edit-category/admin-edit-category.component';
-import { adminCategoriesAnimations } from './admin.categories.animations';
+import { adminCategoriesAnimations } from './admin-categories.animations';
 
 @Component({
   selector: 'app-admin-categories',
