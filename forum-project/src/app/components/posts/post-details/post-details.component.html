@@ -3,7 +3,7 @@
     <div class="col-md-12 col-lg-8 main-content">
       <h1 class="mb-4">{{post.title}}</h1>
       <div class="post-meta">
-                  <span class="category" (click)="changeCategory(post.category)">{{post.category.name}} </span>
+                  <a mat-flat-button (click)="changeCategory(post.category)">{{post.category.name}} </a>
                   <span class="mr-2"> {{post.creationDate.toLocaleString()}} </span>
                   <span class="ml-2"><span class="fa fa-comments"></span> {{post.comments.length}}</span>
                 </div>
@@ -36,5 +36,5 @@
   </div>
 </div>
 <ng-template #notFound>
-  <div class="container mt-5">Post not found.</div>
+  <app-not-found></app-not-found>
 </ng-template>

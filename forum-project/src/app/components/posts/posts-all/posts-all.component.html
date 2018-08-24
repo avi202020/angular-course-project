@@ -17,7 +17,7 @@
           <th>Publish date</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="postsToShow.length > 0; else noPosts">
         <tr class="pointer" *ngFor="let p of postsToShow | paginate: { id: 'allPosts', itemsPerPage: pageSize, currentPage: currentPage}" (click)="navigate(p._id)">
             <td>{{p.title.substr(0, 50)}}</td>
             <td>{{p.body.substr(0, 50)}}...</td>
@@ -26,6 +26,9 @@
             <td>{{p.creationDate.toLocaleString()}}</td>
         </tr>
       </tbody>
+      <ng-template #noPosts class="borderless">
+        No posts under this category.
+      </ng-template>
     </table>
   </div>
   <pagination-controls

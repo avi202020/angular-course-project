@@ -4,7 +4,8 @@ import * as PostActions from './post.actions';
 import { CommentModel } from '../../models/comments/comment.model';
 
 const initialState: PostState = {
-  all: []
+  all: [],
+  postsRequestMade: false
 };
 
 function getAllPosts(state, allRecipes) {
@@ -89,6 +90,14 @@ export function postReducer (
       return editComment(state, action.payload);
     case PostActions.DELETE_COMMENT:
       return deleteComment(state, action.id, action.postId);
+    case PostActions.GET_ALL_FINISHED:
+      return Object.assign({}, state, {
+        postsRequestMade: true
+      });
+    case PostActions.GET_ALL_NOT_FINISHED:
+      return Object.assign({}, state, {
+        postsRequestMade: false
+      });
     default:
       return state;
   }

@@ -10,6 +10,9 @@ export const GET_ALL = '[POST] GET_ALL';
 export const ADD_COMMENT = '[POST] ADD_COMMENT';
 export const EDIT_COMMENT = '[POST] EDIT_COMMENT';
 export const DELETE_COMMENT = '[POST] DELETE_COMMENT';
+export const GET_ALL_FINISHED = '[POST] GET_ALL_FINISHED';
+export const GET_ALL_NOT_FINISHED = '[POST] GET_ALL_NOT_FINISHED';
+
 
 export class GetAllPosts implements Action {
   readonly type: string = GET_ALL;
@@ -54,4 +57,12 @@ export class DeleteComment implements Action {
   constructor(public id: string, public postId: string) { }
 }
 
-export type Types = GetAllPosts | Add | Edit | Delete | AddComment | EditComment;
+export class GetAllFinished implements Action {
+  readonly type: string = GET_ALL_FINISHED;
+}
+
+export class GetAllNotFinished implements Action {
+  readonly type: string = GET_ALL_NOT_FINISHED;
+}
+
+export type Types = GetAllPosts | Add | Edit | Delete | AddComment | EditComment | GetAllFinished | GetAllNotFinished;

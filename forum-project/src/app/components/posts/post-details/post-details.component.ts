@@ -32,8 +32,12 @@ export class PostDetailsComponent extends BaseComponent {
       .subscribe(posts => {
         if (posts.length > 0) {
           this.post = posts.find(p => p._id === this.postId);
-          this.post.creationDate = new Date(this.post.creationDate);
-          this.post.comments.forEach(c => c.creationDate = new Date(c.creationDate));
+          if (this.post) {
+            this.post.creationDate = new Date(this.post.creationDate);
+            this.post.comments.forEach(c => c.creationDate = new Date(c.creationDate));
+          } else {
+            this.router.navigate(['/404']);
+          }
         }
       });
       this.subscriptions.push(this.subscription$);

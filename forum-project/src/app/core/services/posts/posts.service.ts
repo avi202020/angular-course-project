@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AppState } from '../../store/app.state';
 import { Store, select } from '@ngrx/store';
-import { GetAllPosts, Add, Edit, Delete } from '../../store/posts/post.actions';
+import { GetAllPosts, Add, Edit, Delete, GetAllFinished, GetAllNotFinished } from '../../store/posts/post.actions';
 import { PostModel } from '../../models/posts/post.model';
 import { ResponseModel } from '../../models/response.model';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -34,12 +34,14 @@ export class PostsService {
     if (this.cachedPosts && (currentTime - this.lastTimeCalled < cacheTime)) {
       return;
     }
+    this.store.dispatch(new GetAllNotFinished());
     this.cachedPosts = true;
     this.lastTimeCalled = currentTime;
 
     this.spinner.show();
     this.http.get<PostModel[]>(allPostsUrl)
       .subscribe(posts => {
+        this.store.dispatch(new GetAllFinished());
         this.store.dispatch(new GetAllPosts(posts));
         this.spinner.hide();
       });

@@ -16,6 +16,7 @@ import { BaseComponent } from '../../base.component';
 })
 export class PostEditComponent extends BaseComponent {
   protected postId: string;
+  protected post;
   protected editForm;
   protected categories;
   private subscriptionCat$: Subscription;
@@ -32,28 +33,23 @@ export class PostEditComponent extends BaseComponent {
       });
       this.subscriptionPost$ = this.store.pipe(select(st => st.posts.all))
         .subscribe(posts => {
-          if (posts.length > 0) {
-            const post = posts.find(p => p._id === this.postId);
-            if (!post) {
-              this.router.navigate(['404']);
-              return;
-            }
-            if (post.authorName !== this.authService.userName || !this.authService.isAdmin()) {
-              this.router.navigate(['/posts']);
-              return;
-            }
-            this.editForm = this.fb.group({
-              category: [post.category.name, [Validators.required]],
-              title: [post.title, [Validators.required, Validators.minLength(6)]],
-              body: [post.body, [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
-              authorName: [post.authorName]
-            });
-
-            console.log(this.editForm);
-          } else {
-            this.router.navigate(['404']);
+          this.post = posts.find(p => p._id === this.postId);
+          if (!this.post) {
+            this.router.navigate(['/404']);
             return;
           }
+          if (!this.authService.isAdmin() && this.post.authorName !== this.authService.userName) {
+            this.router.navigate(['/posts']);
+            return;
+          }
+          this.editForm = this.fb.group({
+            category: [this.post.category.name, [Validators.required]],
+            title: [this.post.title, [Validators.required, Validators.minLength(6)]],
+            body: [this.post.body, [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
+            authorName: [this.post.authorName]
+          });
+
+          console.log(this.editForm);
         });
 
       this.subscriptions.push(this.subscriptionCat$);
