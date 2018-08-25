@@ -45,6 +45,22 @@ Administrator:
     can delete categories
 ```
 
+```
+Views:
+   Home Page: Shows two images with the 6 latest posts and available categories. ('/home')
+   Posts Page: Shows all posts in the forum, (can be selected by a given category). ('/posts')
+   Create Post Page: Shows a form to add a post to a given category. ('/posts/create')
+   Edit Post Page: Shows a form to edit a given post. ('/posts/edit/:id')
+   Post Details Page: Shows the post with its category and comments. ('/posts/details/:id')
+   Add Comment Page: Shows a form to add comment to a particular post ('/comments/create/:postId')
+   Admin: Shows categories list (create, edit, delete) and users list (user information, functionality to ban/unban user). ('/admin')
+Modal Dialogs:
+  Login
+  Register
+  Edit Comment
+  Edit Category
+```
+
 Post has a title, an author, a description, a category, date created and comments.
 
 Comment has an author, a description and date created.
